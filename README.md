@@ -1,4 +1,4 @@
-h1.Drupal Module Renamer
+#Drupal Module Renamer
 
 Rename Drupal modules.
 
