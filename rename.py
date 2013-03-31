@@ -16,6 +16,4 @@ if __name__ == '__main__':
     print("Argument error.")
     sys.exit(1)
 
-  renamer.rename_file_names()
-
-  renamer.rename_strings()
+  renamer.rename()
