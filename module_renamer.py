@@ -1,22 +1,18 @@
 import os
 import shutil
 import re
+from string import capitalize as cap
 
 class ModuleRenamer(object):
 
-  from_name = ''
-  to_name = ''
-  path_to_module = ''
-
   def __init__(self, from_name, to_name, path_to_module = './'):
-    super(ModuleRenamer, self).__init__()
-    self.from_name = from_name
-    self.to_name = to_name
-    self.path_to_module = path_to_module
+    self.from_name, self.to_name, self.path_to_module = from_name, to_name, path_to_module
 
   def validate_args(self):
-    # @todo Implement.
-    return True
+    valid_name = '^[a-z][a-z0-9_]*$'
+    return re.match(valid_name, self.from_name) and \
+           re.match(valid_name, self.to_name) and \
+           os.path.exists(self.path_to_module)
 
   def rename(self):
     new_module_dir = os.path.join(self.path_to_module, '..', self.to_name)
@@ -35,4 +31,12 @@ class ModuleRenamer(object):
         self.rename_strings(new_file_path)
 
   def rename_strings(self, filename):
-    0
+    file = open(filename, 'r')
+    content = file.read()
+    content = re.sub(self.from_name, self.to_name, content)
+    content = re.sub(cap(self.from_name), cap(self.to_name), content)
+    file.close()
+
+    file = open(filename, 'w')
+    file.write(content)
+    file.close()
