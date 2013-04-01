@@ -31,6 +31,9 @@ class ModuleRenamer(object):
         print('\033[37m[mv]\033[0m ' + file_path + ' -> ' + new_file_path)
         self.rename_strings(new_file_path)
 
+    print("Do not forget to rename those modules in the \033[35msystem\033[0m table.:")
+    print("\033[33mUPDATE system SET filename = REPLACE(filename, '" + self.from_name + "', '" + self.to_name + "'), name = '" + self.to_name + "' WHERE name = '" + self.from_name + "';\033[0m")
+
   def rename_strings(self, filename):
     file = open(filename, 'r')
     content = file.read()
