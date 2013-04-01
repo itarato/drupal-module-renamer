@@ -28,8 +28,10 @@ class ModuleRenamer(object):
         file_path = os.path.join(dirpath, filename)
         new_file_path = os.path.join(dirpath, new_filename)
         shutil.move(file_path, new_file_path)
-        print('\033[37m[mv]\033[0m ' + file_path + ' -> ' + new_file_path)
-        self.rename_strings(new_file_path)
+        print('\033[37m[created]\033[0m ' + new_file_path)
+
+        if new_filename.lower().endswith(('.module', '.info', '.php', '.inc', '.install', '.test', '.theme')):
+          self.rename_strings(new_file_path)
 
     print("Do not forget to rename those modules in the \033[35msystem\033[0m table.:")
     print("\033[33mUPDATE system SET filename = REPLACE(filename, '" + self.from_name + "', '" + self.to_name + "'), name = '" + self.to_name + "' WHERE name = '" + self.from_name + "';\033[0m")
